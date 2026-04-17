@@ -33,11 +33,13 @@
 }
 
 #screen-layout {
-  background-image: url("assets/bg-layout.png");
+  background-image: none;
+  background-color: #f7f2eb;
 }
 
 #screen-confirm {
-  background-image: url("assets/bg-confirm.png");
+  background-image: none;
+  background-color: #f7f2eb;
 }
 
     .screen.active {
@@ -253,17 +255,23 @@
   gap: 2.2%;
 }
 
-   .item-button {
+.item-button {
   width: 100%;
-  height: 11.8%;
-  padding: 0;
+  height: 9%;
+  padding: 0 18px;
   font-size: clamp(20px, 2vw, 34px);
   border: none;
-  border-radius: 24px;
-  background: transparent;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.35);
   color: #6f5a4e;
-  box-shadow: none;
+  box-shadow: 0 2px 6px rgba(120, 100, 80, 0.06);
   cursor: pointer;
+  position: relative;
+  z-index: 21;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
     .workspace-area {
@@ -272,24 +280,25 @@
       min-width: 0;
     }
 
-   .layout-canvas-wrap {
+.layout-canvas-wrap {
   position: absolute;
-  left: 36.5%;
-  top: 13.5%;
-  width: 49%;
-  height: 42%;
+  left: 560px;
+  top: 40px;
+  width: 500px;
+  height: 380px;
   padding: 0;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
- .layout-canvas {
+.layout-canvas {
   position: relative;
   width: 100%;
   height: 100%;
   background: transparent;
-  border: none;
+  border: 3px solid #b89f8d;  /* ←これ追加！ */
+  border-radius: 12px;        /* ←ちょい丸くするといい感じ */
   overflow: hidden;
 }
 
@@ -332,20 +341,21 @@
     }
 
     /* 家具 */
-    .furniture {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #f8f8f8;
-      border: 2px solid #b7b7b7;
-      color: #6f5a4e;
-      font-size: 18px;
-      cursor: grab;
-      user-select: none;
-      text-align: center;
-      padding: 6px;
-    }
+ .furniture {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border: 2px solid #b7b7b7;
+  color: #6f5a4e;
+  font-size: 18px;
+  cursor: grab;
+  user-select: none;
+  text-align: center;
+  padding: 6px;
+  transform-origin: center center;
+}
 
     .furniture.selected {
       outline: 3px dashed #8db0df;
@@ -360,6 +370,49 @@
       padding-bottom: 8px;
       padding-left: 8px;
     }
+　　
+.furniture.toilet {
+  background: transparent !important;
+  border: none !important;
+  overflow: visible;   /* ← 文字を外に出せるようにする */
+}
+
+.toilet-body {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+}
+
+.toilet-icon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.toilet-label {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 2px);   /* ← 箱の外に出す */
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #6f5a4e;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.toilet-icon path {
+  fill: none;
+  stroke: #555;
+  stroke-width: 8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
 
     .furniture.window {
       background: #f0f7ff;
@@ -414,42 +467,128 @@
     }
 
     .bed-rail-panel {
-      position: absolute;
-      left: 6%;
-      top: 68%;
-      width: 48%;
-      padding: 18px 24px;
-      display: none;
-      z-index: 20;
-    }
+  position: absolute;
+  left: 32%;
+  top: 70%;
+  width: 38%;
+  padding: 12px 16px;
+  display: none;
+  z-index: 20;
+}
 
     .bed-rail-panel.show {
       display: block;
     }
 
     .bed-rail-title {
-      font-size: 22px;
-      margin-bottom: 14px;
-      color: #7b6558;
-      font-weight: bold;
-    }
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #7b6558;
+  font-weight: bold;
+}
 
-    .bed-rail-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+ .bed-rail-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-items: start;
+}
+.furniture.bed {
+  background: #fff;
+  border: 3px solid #222;
+  position: absolute;
+  overflow: visible;
+}
+.bed-rail-buttons + .bed-rail-buttons {
+  margin-top: 10px;
+}
+.bed-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  white-space: nowrap;
+  pointer-events: none;
+}
 
-    .rail-btn {
-      border: none;
-      border-radius: 16px;
-      padding: 12px 18px;
-      background: rgba(255,255,255,0.92);
-      color: #6f5a4e;
-      cursor: pointer;
-      font-size: 18px;
-      box-shadow: 0 4px 8px rgba(120, 100, 80, 0.08);
-    }
+.bed-rail {
+  position: absolute;
+  background: #111;
+}
+
+.bed-rail.hidden {
+  display: none;
+}
+
+.bed-pillow {
+  position: absolute;
+  width: 34px;
+  height: 18px;
+  border: 3px solid #222;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* 柵の共通 */
+.bed-rail {
+  position: absolute;
+  background: #111;
+}
+
+.bed-rail.hidden {
+  display: none;
+}
+
+/* 直線柵：縦 */
+.bed-rail.v-rail {
+  width: 8px;
+}
+
+/* 直線柵：横 */
+.bed-rail.h-rail {
+  height: 8px;
+}
+
+/* L字の共通 */
+.bed-rail.lshape {
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+.bed-rail.lshape::before,
+.bed-rail.lshape::after {
+  content: "";
+  position: absolute;
+  background: #111;
+}
+.bed-rail.lshape::before {
+  width: 8px;
+  height: var(--v);
+  left: 0;
+  top: 0;
+}
+
+.bed-rail.lshape::after {
+  width: var(--h);
+  height: 8px;
+  left: var(--hx);
+  top: var(--hy);
+}
+   .rail-btn {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.92);
+  color: #6f5a4e;
+  cursor: pointer;
+  font-size: 15px;
+  box-shadow: 0 4px 8px rgba(120, 100, 80, 0.08);
+}
 
     /* ---------- 3ページ目 ---------- */
     .confirm-title {
@@ -462,17 +601,12 @@
       font-weight: bold;
     }
 
-   .confirm-card {
+.confirm-card {
   position: absolute;
-  left: 50%;
-  top: 16.5%;
-  transform: translateX(-50%);
-  width: 62%;
-  height: 50%;
-  padding: 0;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  left: 600px;
+  top: 60px;
+  width: 500px;
+  height: 380px;
 }
 
    .confirm-preview {
@@ -486,13 +620,15 @@
   border-radius: 0;
 }
 
-  .confirm-inner {
+ .confirm-inner {
   width: 100%;
   height: 100%;
   position: relative;
   background: transparent;
   border: none;
   overflow: hidden;
+  border: 4px solid #dbd3c8;
+border-radius: 12px;
 }
 
     .confirm-kuma {
@@ -518,21 +654,22 @@
       min-width: 260px;
     }
 
-    /* レスポンシブ */
-    @media (max-width: 1000px) {
-      .side-panel {
-        width: 34%;
-      }
+/*
+@media (max-width: 1000px) {
+  .side-panel {
+    width: 34%;
+  }
 
-      .layout-canvas-wrap {
-        left: 4%;
-        width: 82%;
-      }
+  .layout-canvas-wrap {
+    left: 4%;
+    width: 82%;
+  }
 
-      .hint-speech {
-        width: 44%;
-      }
-    }
+  .hint-speech {
+    width: 44%;
+  }
+}
+*/
     .layout-hint-text {
   position: absolute;
   left: 40%;
@@ -545,119 +682,328 @@
   z-index: 10;
   pointer-events: none;
 }
+.layout-wrap {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  gap: 26px;
+  position: relative;
+}
+
+.side-panel {
+  position: absolute;
+  left: 6%;
+  top: 8%;
+  width: 22%;
+  height: 76%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4%;
+  z-index: 20;
+}
+
+.workspace-area {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  z-index: 1;
+}
+.kuma-speech-text {
+  position: absolute;
+  right: 39%;
+  bottom: 7%;
+  width: 19%;
+  text-align: center;
+  font-size: clamp(20px, 1.8vw, 30px);
+  color: #9a755c;
+  line-height: 1.5;
+  z-index: 6;
+  pointer-events: none;
+}
+.furniture.chair {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.chair-seat {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 60%;
+  background: #f8f8f8;   /* ←テレビと同じ系 */
+  border: 2px solid #b7b7b7;
+  border-radius: 12px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6f5a4e;
+  font-size: 18px;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.chair-leg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 75%;
+  background: white;
+  clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%);
+}
+.chair-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #6f5a4e;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.furniture.door {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* 太い1本線 */
+.door-line-only {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 6px;
+  background: #222;
+  transform-origin: center center;
+}
+
+/* ドア文字 */
+.door-label {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  white-space: nowrap;
+  transform-origin: center center;
+}
+.furniture.window {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.window-line-only {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 6px;
+  background: #222;
+  transform-origin: center center;
+}
+
+.window-label {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  white-space: nowrap;
+  transform-origin: center center;
+}
+
+.furniture.toilet {
+  background: transparent !important;
+  border: none !important;
+}
+
+.furniture.tv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tv-label {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: normal;
+  color: #6f5a4e;
+  transform-origin: center center;
+  pointer-events: none;
+}
+/* 外側（黒いふち） */
+.chair-leg-border {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;   /* ←少し大きく */
+  height: 78%;
+  background: #222;
+  clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%);
+}
+
+/* 内側（白） */
+.chair-leg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 75%;
+  background: #f8f8f8;
+  clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%);
+}
+.chair-text {
+  display: inline-block;
+  transform-origin: center center;
+  position: relative;
+  z-index: 1;
+  margin-top: 10px;
+}
+.front-triangle {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #222;
+  pointer-events: none;
+  z-index: 2;
+}
+.tansu-label {
+  display: inline-block;
+  transform-origin: center center;
+  pointer-events: none;
+}
+.kuma-img {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  width: 120px;
+  opacity: 0.9;
+}
+.kuma-comment {
+  position: absolute;
+  right: 170px;
+  bottom: 90px;
+  font-size: 18px;
+  color: #9a755c;
+}
   </style>
 </head>
 <body>
 
-  <!-- 1ページ目 -->
-  <section id="screen-title" class="screen active">
-   
+<section id="screen-layout" class="screen active">
+  <div class="top-buttons">
+  <button class="small-pill" onclick="clearAllFurniture()">全部消す</button>
+  <button class="small-pill" onclick="saveCurrentLayout()">保存する</button>
+</div>
 
+<div class="kuma-comment">快適に過ごせるといいなあ</div>
+<img src="assets/IMG_5841.PNG" class="kuma-img">
 
-
-    <div class="start-wrap">
-      <button class="main-btn" onclick="showScreen('layout')">はじめる</button>
+  <div class="layout-wrap">
+    <div class="side-panel">
+      <button class="item-button" onclick="addFurniture('テレビ')">テレビ</button>
+      <button class="item-button" onclick="addFurniture('テーブル')">テーブル</button>
+      <button class="item-button" onclick="addFurniture('イス')">イス</button>
+      <button class="item-button" onclick="addFurniture('車椅子')">車椅子</button>
+<button class="item-button" onclick="addFurniture('歩行器')">歩行器</button>
+      <button class="item-button" onclick="addFurniture('タンス')">タンス</button>
+      <button class="item-button" onclick="addFurniture('ドア')">ドア</button>
+      <button class="item-button" onclick="addFurniture('トイレ')">トイレ</button>
+      <button class="item-button" onclick="addFurniture('窓')">窓</button>
+      <button class="item-button" onclick="addFurniture('ベッド')">ベッド</button>
     </div>
-  </section>
 
-  <!-- 2ページ目 -->
-  <section id="screen-layout" class="screen">
-    <div class="top-buttons">
-      <button class="small-pill" onclick="showScreen('title')">もどる</button>
-      <button class="small-pill" onclick="goToConfirm()">かくにんへ</button>
+    <div class="workspace-area">
+  <div class="layout-canvas-wrap soft-card">
+    <div id="layoutCanvas" class="layout-canvas">
+      <!-- 家具がここに入る -->
+
+      <div id="selectionControls" class="controls">
+        <button class="control-btn control-delete" id="deleteBtn" onclick="deleteSelected(event)">🗑</button>
+        <button class="control-btn" id="rotateBtn" onclick="rotateSelected(event)">↻</button>
+        <button class="control-btn" id="plusBtn" onclick="resizeSelected(1.1, event)">＋</button>
+        <button class="control-btn" id="minusBtn" onclick="resizeSelected(0.9, event)">－</button>
+      </div>
     </div>
+  </div>
 
-    <div class="layout-wrap">
-      <div class="side-panel">
+  <!-- 👇ここ！！！ -->
+  <div
+  id="confirmInner"
+  class="confirm-inner"
+  style="
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    width: 500px;
+    height: 380px;
+    pointer-events: none;
+  "
+></div>
+</div>
+
+      <div id="bedRailPanel" class="bed-rail-panel soft-card">
         
-        <button class="item-button" onclick="addFurniture('テレビ')">テレビ</button>
-        <button class="item-button" onclick="addFurniture('テーブル')">テーブル</button>
-        <button class="item-button" onclick="addFurniture('イス')">イス</button>
-        <button class="item-button" onclick="addFurniture('タンス')">タンス</button>
-        <button class="item-button" onclick="addFurniture('ドア')">ドア</button>
-        <button class="item-button" onclick="addFurniture('窓')">窓</button>
-        <button class="item-button" onclick="addFurniture('ベッド')">ベッド</button>
-      </div>
-
-      <div class="workspace-area">
-        <div class="layout-canvas-wrap soft-card">
-          <div id="layoutCanvas" class="layout-canvas">
-            <!-- 家具がここに入る -->
-             <div id="layoutHintText" class="layout-hint-text">ドラッグで<br>うごかせるよ！</div>
-            <div id="selectionControls" class="controls">
-              <button class="control-btn control-delete" id="deleteBtn" onclick="deleteSelected()">🗑</button>
-              <button class="control-btn" id="rotateBtn" onclick="rotateSelected()">↻</button>
-              <button class="control-btn" id="plusBtn" onclick="resizeSelected(1.1)">＋</button>
-              <button class="control-btn" id="minusBtn" onclick="resizeSelected(0.9)">－</button>
-            </div>
-          </div>
-        </div>
-
-        <div id="bedRailPanel" class="bed-rail-panel soft-card">
-          <div class="bed-rail-title">冊の位置変更</div>
-          <div class="bed-rail-buttons">
-            <button class="rail-btn" onclick="setBedRail('left-top')">左上</button>
-            <button class="rail-btn" onclick="setBedRail('right-top')">右上</button>
-            <button class="rail-btn" onclick="setBedRail('left-bottom')">左下</button>
-            <button class="rail-btn" onclick="setBedRail('right-bottom')">右下</button>
-            <button class="rail-btn" onclick="setBedRail('none')">なし</button>
-          </div>
-        </div>
-
-       
-
     
+  <div class="bed-rail-buttons">
+  <button class="rail-btn" onclick="toggleBedRail('left-top')">左上 ON/OFF</button>
+  <button class="rail-btn" onclick="toggleBedRail('right-top')">右上 ON/OFF</button>
+  <button class="rail-btn" onclick="toggleBedRail('left-bottom')">左下 ON/OFF</button>
+  <button class="rail-btn" onclick="toggleBedRail('right-bottom')">右下 ON/OFF</button>
+</div>
+<div class="bed-rail-buttons">
+  <button class="rail-btn" onclick="setBedRailShape('left-top','lshape')">左上L字</button>
+  <button class="rail-btn" onclick="setBedRailShape('right-top','lshape')">右上L字</button>
+</div>
+        </div>
       </div>
+
+
     </div>
-  </section>
-
-  <!-- 3ページ目 -->
-  <section id="screen-confirm" class="screen">
-   
-
-    <div class="confirm-card soft-card">
-      <div class="confirm-preview">
-        <div id="confirmInner" class="confirm-inner"></div>
-      </div>
-    </div>
-
-
-    <div class="confirm-buttons">
-      <button class="sub-btn" onclick="showScreen('layout')">もどる</button>
-      <button class="main-btn pdf-btn" onclick="saveAsImage()">画像で保存</button>
-    </div>
-  </section>
-
+  </div>
+</section>
+  
   <script>
-    const screens = {
-      title: document.getElementById('screen-title'),
-      layout: document.getElementById('screen-layout'),
-      confirm: document.getElementById('screen-confirm')
-    };
-
-    const layoutCanvas = document.getElementById('layoutCanvas');
-    const confirmInner = document.getElementById('confirmInner');
+   const layoutCanvas = document.getElementById('layoutCanvas');
+const confirmInner = document.getElementById('confirmInner');
     const selectionControls = document.getElementById('selectionControls');
     const bedRailPanel = document.getElementById('bedRailPanel');
-    const layoutHint = document.getElementById('layoutHintText');
+    const kumaSpeechText = document.getElementById('kumaSpeechText');
 
     let selectedItem = null;
     let furnitureCount = 0;
 
-    function showScreen(name) {
-      Object.values(screens).forEach(screen => screen.classList.remove('active'));
-      screens[name].classList.add('active');
+    layoutCanvas.addEventListener('click', (e) => {
+  if (e.target === layoutCanvas) {
+    clearSelection();
+  }
+});
+function keepSelection(e) {
+  e.stopPropagation();
+}
 
-      if (name !== 'layout') {
-        clearSelection();
-      }
-    }
-
-    function goToConfirm() {
-      clearSelection();
-      makeConfirmPreview();
-      showScreen('confirm');
-    }
 
     function addFurniture(type) {
       const item = document.createElement('div');
@@ -665,54 +1011,688 @@
       item.dataset.type = type;
       item.dataset.rotation = '0';
       item.dataset.scale = '1';
+
+      
       item.dataset.id = 'f' + (++furnitureCount);
 
       const config = getFurnitureConfig(type);
 
       item.style.width = config.width + 'px';
       item.style.height = config.height + 'px';
+
+item.dataset.baseWidth = config.width;
+item.dataset.baseHeight = config.height;
+
       item.style.left = Math.max(20, layoutCanvas.clientWidth / 2 - config.width / 2) + 'px';
       item.style.top = Math.max(20, layoutCanvas.clientHeight / 2 - config.height / 2) + 'px';
 
       if (config.className) item.classList.add(config.className);
-      item.textContent = config.label;
 
-      if (type === 'ベッド') {
-        const rail = document.createElement('div');
-        rail.className = 'bed-rail';
-        rail.dataset.railPosition = 'left-top';
-        item.appendChild(rail);
-        updateBedRailPosition(item, 'left-top');
-      }
+if (type === 'テレビ' || type === 'テーブル') {
+  item.innerHTML = `
+    <span class="tv-label">${type}</span>
+  `;
+} else if (type === 'トイレ') {
+  item.innerHTML = `
+    <div class="toilet-body">
+      <svg class="toilet-icon" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M28 18 L72 18 L72 56 Q72 84 50 84 Q28 84 28 56 Z"></path>
+      </svg>
+    </div>
+    <span class="toilet-label">トイレ</span>
+  `;
 
-      item.addEventListener('mousedown', startDragMouse);
-      item.addEventListener('touchstart', startDragTouch, { passive: false });
-      item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        selectItem(item);
-      });
+// イス（▲なし）
+} else if (type === 'イス') {
+  item.innerHTML = `<span class="chair-text">イス</span>`;
 
-      layoutCanvas.appendChild(item);
-      selectItem(item);
-      setHintText(type + 'をおいたよ！');
+// 車椅子・歩行器（▲あり）
+} else if (type === '車椅子' || type === '歩行器') {
+  item.innerHTML = `
+    <div class="front-triangle"></div>
+    <span class="chair-text">${type}</span>
+  `;
+} else if (type === 'ドア') {
+  item.innerHTML = `
+    <div class="door-line-only"></div>
+    <span class="door-label">ドア</span>
+  `;
+} else if (type === '窓') {
+  item.innerHTML = `
+    <div class="window-line-only"></div>
+    <span class="window-label">窓</span>
+  `;
+} else if (type === 'タンス') {
+  item.innerHTML = `<span class="tansu-label">タンス</span>`;
+} else {
+  item.textContent = config.label;
+}
+
+if (type === 'ベッド') {
+  item.innerHTML = `
+    <div class="bed-label">ベッド</div>
+    <div class="bed-pillow"></div>
+
+    <div class="bed-rail rail-lt hidden" data-pos="left-top" data-shape="straight"></div>
+    <div class="bed-rail rail-rt hidden" data-pos="right-top" data-shape="straight"></div>
+    <div class="bed-rail rail-lb hidden" data-pos="left-bottom" data-shape="straight"></div>
+    <div class="bed-rail rail-rb hidden" data-pos="right-bottom" data-shape="straight"></div>
+  `;
+}
+item.addEventListener('mousedown', startDragMouse);
+item.addEventListener('touchstart', startDragTouch, { passive: false });
+item.addEventListener('click', (e) => {
+  e.stopPropagation();
+  selectItem(item);
+});
+
+layoutCanvas.appendChild(item);
+
+if (type === 'テレビ' || type === 'テーブル') {
+  updateTvLabel(item);
+}
+if (type === 'トイレ') {
+  updateToiletSymbol(item);
+}
+if (type === 'イス' || type === '車椅子' || type === '歩行器') {
+  updateChairSymbol(item);
+}
+if (type === 'ドア') {
+  updateDoorSymbol(item);
+}
+if (type === '窓') {
+  updateWindowSymbol(item);
+}
+if (type === 'タンス') {
+  updateTansuLabel(item);
+}
+if (type === 'ベッド') {
+  updateBedPillow(item);
+  updateBedRails(item);
+  updateBedLabel(item);
+}
+
+selectItem(item);
+setHintText(type + 'をおいたよ！');
     }
+function updateTvLabel(item) {
+  if (!item) return;
+  if (item.dataset.type !== 'テレビ' && item.dataset.type !== 'テーブル') return;
 
+  const label = item.querySelector('.tv-label');
+  if (!label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  if (rotation === 135 || rotation === 180 || rotation === 225) {
+    label.style.transform = 'rotate(180deg)';
+  } else {
+    label.style.transform = 'rotate(0deg)';
+  }
+}
+function updateToiletSymbol(item) {
+  if (!item || item.dataset.type !== 'トイレ') return;
+
+  const label = item.querySelector('.toilet-label');
+  if (!label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  label.style.left = '50%';
+  label.style.top = 'calc(100% + 2px)';
+  label.style.right = '';
+  label.style.bottom = '';
+
+  /* 文字だけ正面向き */
+  label.style.transform = `translateX(-50%) rotate(${-rotation}deg)`;
+}
+function updateChairSymbol(item) {
+  if (!item) return;
+  if (
+    item.dataset.type !== 'イス' &&
+    item.dataset.type !== '車椅子' &&
+    item.dataset.type !== '歩行器'
+  ) return;
+
+  const leg = item.querySelector('.chair-leg');
+  const border = item.querySelector('.chair-leg-border');
+
+  if (!leg || !border) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  const transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+
+  leg.style.transform = transform;
+  border.style.transform = transform; // ←これ追加が本体🔥
+}
+function updateDoorSymbol(item) {
+  if (!item || item.dataset.type !== 'ドア') return;
+
+  const line = item.querySelector('.door-line-only');
+  const label = item.querySelector('.door-label');
+  if (!line || !label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  line.style.transform = 'none';
+  label.style.writingMode = 'horizontal-tb';
+  if (rotation === 0) {
+    // 上
+    line.style.width = '80%';
+    line.style.height = '6px';
+    line.style.left = '10%';
+    line.style.top = '0';
+
+    label.style.left = '50%';
+    label.style.top = '12px';
+    label.style.transform = 'translateX(-50%)';
+    label.style.writingMode = 'horizontal-tb';
+
+  } else if (rotation === 90) {
+    // 右
+    line.style.width = '6px';
+    line.style.height = '80%';
+    line.style.left = 'calc(100% - 6px)';
+    line.style.top = '10%';
+
+    label.style.left = 'calc(100% - 28px)';
+    label.style.top = '50%';
+    label.style.transform = 'translateY(-50%)';
+    label.style.writingMode = 'vertical-rl';
+
+  } else if (rotation === 180) {
+    // 下
+    line.style.width = '80%';
+    line.style.height = '6px';
+    line.style.left = '10%';
+    line.style.top = 'calc(100% - 6px)';
+
+    label.style.left = '50%';
+    label.style.top = '55px';
+    label.style.transform = 'translateX(-50%)';
+    label.style.writingMode = 'horizontal-tb';
+
+  } else if (rotation === 270) {
+    // 左
+    line.style.width = '6px';
+    line.style.height = '80%';
+    line.style.left = '0';
+    line.style.top = '10%';
+
+    label.style.left = '12px';
+    label.style.top = '50%';
+    label.style.transform = 'translateY(-50%)';
+    label.style.writingMode = 'vertical-rl';
+  }
+}
+
+function updateWindowSymbol(item) {
+  if (!item || item.dataset.type !== '窓') return;
+
+  const line = item.querySelector('.window-line-only');
+  const label = item.querySelector('.window-label');
+  if (!line || !label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  line.style.transform = 'none';
+  label.style.writingMode = 'horizontal-tb';
+
+  if (rotation === 0) {
+    // 上
+    line.style.width = '80%';
+    line.style.height = '6px';
+    line.style.left = '10%';
+    line.style.top = '0';
+
+    label.style.left = '50%';
+    label.style.top = '12px';
+    label.style.transform = 'translateX(-50%)';
+    label.style.writingMode = 'horizontal-tb';
+
+  } else if (rotation === 90) {
+    // 右
+    line.style.width = '6px';
+    line.style.height = '80%';
+    line.style.left = 'calc(100% - 6px)';
+    line.style.top = '10%';
+
+    label.style.left = 'calc(100% - 28px)';
+    label.style.top = '50%';
+    label.style.transform = 'translateY(-50%)';
+    label.style.writingMode = 'vertical-rl';
+
+  } else if (rotation === 180) {
+    // 下
+    line.style.width = '80%';
+    line.style.height = '6px';
+    line.style.left = '10%';
+    line.style.top = 'calc(100% - 6px)';
+
+    label.style.left = '50%';
+    label.style.top = '55px';
+    label.style.transform = 'translateX(-50%)';
+    label.style.writingMode = 'horizontal-tb';
+
+  } else if (rotation === 270) {
+    // 左
+    line.style.width = '6px';
+    line.style.height = '80%';
+    line.style.left = '0';
+    line.style.top = '10%';
+
+    label.style.left = '12px';
+    label.style.top = '50%';
+    label.style.transform = 'translateY(-50%)';
+    label.style.writingMode = 'vertical-rl';
+  }
+}
+
+function updateBedPillow(item) {
+  if (!item || item.dataset.type !== 'ベッド') return;
+
+  const pillow = item.querySelector('.bed-pillow');
+  if (!pillow) return;
+
+  pillow.style.left = '';
+  pillow.style.right = '';
+  pillow.style.top = '';
+  pillow.style.bottom = '';
+  pillow.style.transform = '';
+
+  // 常に「ベッドの頭側（上）」に置く
+  pillow.style.left = '50%';
+  pillow.style.top = '10px';
+  pillow.style.transform = 'translateX(-50%)';
+}
+function updateBedLabel(item) {
+  if (!item || item.dataset.type !== 'ベッド') return;
+
+  const label = item.querySelector('.bed-label');
+  if (!label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  label.style.transform = `translate(-50%, -50%) rotate(${-rotation}deg)`;
+}
+function updateTansuLabel(item) {
+  if (!item || item.dataset.type !== 'タンス') return;
+
+  const label = item.querySelector('.tansu-label');
+  if (!label) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+  label.style.transform = `rotate(${-rotation}deg)`;
+}
+function updateBedRails(item) {
+  if (!item || item.dataset.type !== 'ベッド') return;
+
+  const lt = item.querySelector('.rail-lt');
+  const rt = item.querySelector('.rail-rt');
+  const lb = item.querySelector('.rail-lb');
+  const rb = item.querySelector('.rail-rb');
+
+  [lt, rt, lb, rb].forEach(rail => {
+    if (!rail) return;
+
+    rail.classList.remove('v-rail', 'h-rail', 'lshape', 'straight');
+
+    rail.style.left = '';
+    rail.style.right = '';
+    rail.style.top = '';
+    rail.style.bottom = '';
+    rail.style.width = '';
+    rail.style.height = '';
+    rail.style.background = '';
+    rail.style.position = '';
+    rail.style.transform = '';
+    rail.style.transformOrigin = '';
+
+    rail.style.removeProperty('--v');
+    rail.style.removeProperty('--h');
+    rail.style.removeProperty('--hx');
+    rail.style.removeProperty('--hy');
+  });
+
+  const ltShape = lt?.dataset.shape || 'straight';
+  const rtShape = rt?.dataset.shape || 'straight';
+  const lbShape = lb?.dataset.shape || 'straight';
+  const rbShape = rb?.dataset.shape || 'straight';
+
+  // 0度の位置だけ使う
+  placeTopLeftRail(lt, ltShape === 'lshape');
+  placeTopRightRail(rt, rtShape === 'lshape');
+  placeBottomLeftRail(lb, lbShape === 'lshape');
+  placeBottomRightRail(rb, rbShape === 'lshape');
+}
+//↓これはえる字太くない
+function placeLeftTopRail270(rail, lshape = false) { 
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+
+    rail.style.left = '78px';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+
+    // 長い線を横向きに見せたい
+    rail.style.transform = 'rotate(90deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '20px');
+    rail.style.setProperty('--hx', '-20px');
+    rail.style.setProperty('--hy', '0px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.left = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '80px';
+  }
+}
+function placeTopLeftRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+
+    rail.style.left = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-30px');
+    rail.style.setProperty('--hy', '74px');
+
+    rail.style.position = 'absolute';
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.left = '-3px';
+    rail.style.top = '-3px';
+    rail.style.height = '80px';
+  }
+}
+function placeTopRightRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+
+    rail.style.left = 'calc(100% - 5px)';
+    rail.style.top = '-3px';
+
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '0px');   // ←ここ修正！
+    rail.style.setProperty('--hy', '74px');
+
+    rail.style.position = 'absolute';
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.height = '80px';
+  }
+}
+function placeTopRightRail180(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+
+    rail.style.left = 'calc(100% - 5px)';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    
+
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '0px');
+    rail.style.setProperty('--hy', '74px');
+
+    rail.style.position = 'absolute';
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.height = '80px';
+  }
+}
+function placeBottomLeftRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.left = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(270deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-30px');
+    rail.style.setProperty('--hy', '74px');
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.left = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.height = '80px';
+  }
+}
+function placeBottomLeftRail180(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.left = '5px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(180deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '20px');
+    rail.style.setProperty('--hx', '7px');
+    rail.style.setProperty('--hy', '74px');
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.left = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.height = '80px';
+  }
+}
+function placeBottomRightRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.right = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(180deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-25px');
+    rail.style.setProperty('--hy', '74px');
+  } else {
+    rail.classList.add('v-rail');
+    rail.style.right = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.height = '80px';
+  }
+}
+
+function placeLeftTopRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.left = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(0deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-30px');
+    rail.style.setProperty('--hy', '74px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.left = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '80px';
+  }
+}
+
+function placeLeftBottomRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.left = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(270deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-30px');
+    rail.style.setProperty('--hy', '74px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.left = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '80px';
+  }
+}
+
+function placeRightTopRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transform = 'rotate(90deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '-30px');
+    rail.style.setProperty('--hy', '75px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '80px';
+  }
+}
+
+function placeRightBottomRail(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+    rail.style.right = '-3px';
+    rail.style.bottom = '5px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+    rail.style.transformOrigin = 'top right';
+    rail.style.transform = 'rotate(90deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '30px');
+    rail.style.setProperty('--hx', '0px');
+    rail.style.setProperty('--hy', '75px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.right = '-3px';
+    rail.style.bottom = '-3px';
+    rail.style.width = '80px';
+  }
+}
+function placeRightTopRail270(rail, lshape = false) {
+  if (!rail) return;
+
+  if (lshape) {
+    rail.classList.add('lshape');
+
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '0';
+    rail.style.height = '0';
+    rail.style.background = 'transparent';
+    rail.style.position = 'absolute';
+
+    rail.style.transform = 'rotate(0deg)';
+
+    rail.style.setProperty('--v', '82px');
+    rail.style.setProperty('--h', '20px');
+    rail.style.setProperty('--hx', '0px');
+    rail.style.setProperty('--hy', '75px');
+  } else {
+    rail.classList.add('h-rail');
+    rail.style.right = '-3px';
+    rail.style.top = '-3px';
+    rail.style.width = '80px';
+  }
+}
     function getFurnitureConfig(type) {
       switch (type) {
         case 'テレビ':
-          return { width: 110, height: 70, label: 'テレビ' };
+  return { width: 120, height: 50, label: 'テレビ', className: 'tv' };
         case 'テーブル':
           return { width: 120, height: 70, label: 'テーブル' };
         case 'イス':
-          return { width: 70, height: 60, label: 'イス' };
+  　　　　　return { width: 60, height: 60, label: 'イス' };
+　　　　　case '車椅子':
+  　　　　　return { width: 60, height: 60, label: '車椅子' };
+　　　　　case '歩行器':
+  　　　　　return { width: 60, height: 60, label: '歩行器' };
         case 'タンス':
           return { width: 80, height: 120, label: 'タンス' };
         case 'ドア':
-          return { width: 84, height: 64, label: 'ドア', className: 'door' };
-        case '窓':
-          return { width: 100, height: 44, label: '窓', className: 'window' };
+  　　　　　　return { width: 110, height: 86, label: 'ドア', className: 'door' };
+        case 'トイレ':
+  return { width: 96, height: 106, label: 'トイレ', className: 'toilet' };
+  　　　　　　return { width: 110, height: 86, label: '窓', className: 'window' };
         case 'ベッド':
-          return { width: 90, height: 150, label: 'ベッド', className: 'bed' };
+          return { width: 120, height: 180, label: 'ベッド', className: 'bed' };
         default:
           return { width: 90, height: 60, label: type };
       }
@@ -733,76 +1713,272 @@
       bedRailPanel.classList.remove('show');
     }
 
-    function updateControls() {
-      if (!selectedItem) {
-        selectionControls.classList.remove('show');
-        return;
-      }
+   function updateControls() {
+  if (!selectedItem) {
+    selectionControls.classList.remove('show');
+    return;
+  }
 
-      const left = selectedItem.offsetLeft;
-      const top = selectedItem.offsetTop;
-      const width = selectedItem.offsetWidth;
-      const height = selectedItem.offsetHeight;
+  const itemRect = selectedItem.getBoundingClientRect();
+  const canvasRect = layoutCanvas.getBoundingClientRect();
 
-      selectionControls.classList.add('show');
+  const left = itemRect.left - canvasRect.left;
+  const top = itemRect.top - canvasRect.top;
+  const width = itemRect.width;
+  const height = itemRect.height;
 
-      selectionControls.style.left = left + 'px';
-      selectionControls.style.top = top + 'px';
-      selectionControls.style.width = width + 'px';
-      selectionControls.style.height = height + 'px';
+  const canvasWidth = layoutCanvas.clientWidth;
+  const canvasHeight = layoutCanvas.clientHeight;
 
-      document.getElementById('deleteBtn').style.left = (-58) + 'px';
-      document.getElementById('deleteBtn').style.top = (-18) + 'px';
+  selectionControls.classList.add('show');
 
-      document.getElementById('rotateBtn').style.right = (-58) + 'px';
-      document.getElementById('rotateBtn').style.top = (-18) + 'px';
+  selectionControls.style.left = left + 'px';
+  selectionControls.style.top = top + 'px';
+  selectionControls.style.width = width + 'px';
+  selectionControls.style.height = height + 'px';
 
-      document.getElementById('plusBtn').style.right = (-58) + 'px';
-      document.getElementById('plusBtn').style.bottom = (-18) + 'px';
+  const deleteBtn = document.getElementById('deleteBtn');
+  const rotateBtn = document.getElementById('rotateBtn');
+  const plusBtn = document.getElementById('plusBtn');
+  const minusBtn = document.getElementById('minusBtn');
 
-      document.getElementById('minusBtn').style.left = (-58) + 'px';
-      document.getElementById('minusBtn').style.bottom = (-18) + 'px';
-    }
+  let deleteLeft = -58;
+  let deleteTop = -18;
 
-    function deleteSelected() {
-      if (!selectedItem) return;
-      selectedItem.remove();
-      clearSelection();
-      setHintText('けせたよ！');
-    }
+  let rotateRight = -58;
+  let rotateTop = -18;
 
-    function rotateSelected() {
-      if (!selectedItem) return;
+  let plusRight = -58;
+  let plusBottom = -18;
 
-      let rotation = parseInt(selectedItem.dataset.rotation || '0', 10);
-      rotation = (rotation + 90) % 360;
-      selectedItem.dataset.rotation = rotation;
-      applyTransform(selectedItem);
+  let minusLeft = -58;
+  let minusBottom = -18;
 
-      updateControls();
-      setHintText('くるっと まわせるよ！');
-    }
+  if (left < 60) {
+    deleteLeft = 0;
+    minusLeft = 0;
+  }
 
-    function resizeSelected(rate) {
-      if (!selectedItem) return;
+  if (top < 40) {
+    deleteTop = height + 6;
+    rotateTop = height + 6;
+  }
 
-      let scale = parseFloat(selectedItem.dataset.scale || '1');
-      scale *= rate;
+  if (left + width > canvasWidth - 60) {
+    rotateRight = 0;
+    plusRight = 0;
+  }
 
-      if (scale < 0.6) scale = 0.6;
-      if (scale > 1.8) scale = 1.8;
+  if (top + height > canvasHeight - 60) {
+    plusBottom = height + 6;
+    minusBottom = height + 6;
+  }
 
-      selectedItem.dataset.scale = scale;
-      applyTransform(selectedItem);
+  deleteBtn.style.left = deleteLeft + 'px';
+  deleteBtn.style.top = deleteTop + 'px';
 
-      updateControls();
-    }
+  rotateBtn.style.right = rotateRight + 'px';
+  rotateBtn.style.top = rotateTop + 'px';
 
-    function applyTransform(item) {
-      const rotation = item.dataset.rotation || '0';
-      const scale = item.dataset.scale || '1';
-      item.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    }
+  plusBtn.style.right = plusRight + 'px';
+  plusBtn.style.bottom = plusBottom + 'px';
+
+  minusBtn.style.left = minusLeft + 'px';
+  minusBtn.style.bottom = minusBottom + 'px';
+}
+   function deleteSelected(e) {
+  if (e) e.stopPropagation();
+  if (!selectedItem) return;
+  selectedItem.remove();
+  clearSelection();
+  setHintText('けせたよ！');
+}
+
+function rotateSelected(e) {
+  if (e) e.stopPropagation();
+  if (!selectedItem) return;
+
+  const type = selectedItem.dataset.type;
+
+  // ベッドだけ完全に別処理
+  if (type === 'ベッド') {
+    rotateBed(selectedItem);
+    return;
+  }
+
+  let rotation = parseInt(selectedItem.dataset.rotation || '0', 10);
+
+  if (
+    type === 'テレビ' ||
+    type === 'テーブル' ||
+    type === 'イス' ||
+    type === '車椅子' ||
+    type === '歩行器' ||
+    type === 'トイレ'
+  ) {
+    rotation = (rotation + 45) % 360;
+  } else {
+    rotation = (rotation + 90) % 360;
+  }
+
+  selectedItem.dataset.rotation = rotation;
+
+if (
+  type === 'ドア' ||
+  type === '窓'
+) {
+  selectedItem.style.transform = 'none';
+} else {
+  selectedItem.style.transform = `rotate(${rotation}deg)`;
+}
+
+  const baseWidth = parseFloat(selectedItem.dataset.baseWidth);
+  const baseHeight = parseFloat(selectedItem.dataset.baseHeight);
+  const scale = parseFloat(selectedItem.dataset.scale || '1');
+
+  selectedItem.style.width = (baseWidth * scale) + 'px';
+  selectedItem.style.height = (baseHeight * scale) + 'px';
+
+  keepItemInsideCanvas(selectedItem);
+
+  updateTvLabel(selectedItem);
+  updateToiletSymbol(selectedItem);
+  updateChairSymbol(selectedItem);
+  updateDoorSymbol(selectedItem);
+  updateWindowSymbol(selectedItem);
+  updateTansuLabel(selectedItem);
+  updateChairText(selectedItem);
+  updateControls();
+  updateBedRailPanel();
+  setHintText('くるっと まわせるよ！');
+}
+function rotateBed(item) {
+  let rotation = parseInt(item.dataset.rotation || '0', 10);
+  rotation = (rotation + 90) % 360;
+
+  item.dataset.rotation = rotation;
+  item.style.transform = `rotate(${rotation}deg)`;
+
+  const baseWidth = parseFloat(item.dataset.baseWidth);
+  const baseHeight = parseFloat(item.dataset.baseHeight);
+  const scale = parseFloat(item.dataset.scale || '1');
+
+  item.style.width = (baseWidth * scale) + 'px';
+  item.style.height = (baseHeight * scale) + 'px';
+
+  keepItemInsideCanvas(item);
+
+  updateBedPillow(item);
+  updateBedRails(item);
+  updateBedLabel(item);
+  updateControls();
+  updateBedRailPanel();
+  setHintText('くるっと まわせるよ！');
+}
+function updateChairText(item) {
+  if (!item) return;
+
+  if (
+    item.dataset.type !== 'イス' &&
+    item.dataset.type !== '車椅子' &&
+    item.dataset.type !== '歩行器'
+  ) return;
+
+  const text = item.querySelector('.chair-text');
+  if (!text) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+
+  // 親の回転を打ち消す
+  text.style.transform = `rotate(${-rotation}deg)`;
+}
+function resizeSelected(rate, e) {
+  if (e) e.stopPropagation();
+  if (!selectedItem) return;
+
+  const rotation = parseInt(selectedItem.dataset.rotation || '0', 10);
+  const baseWidth = parseFloat(selectedItem.dataset.baseWidth);
+  const baseHeight = parseFloat(selectedItem.dataset.baseHeight);
+
+  let scale = parseFloat(selectedItem.dataset.scale || '1');
+  scale *= rate;
+
+  if (scale < 0.6) scale = 0.6;
+  if (scale > 1.8) scale = 1.8;
+
+  selectedItem.dataset.scale = scale;
+
+let naturalWidth = baseWidth;
+let naturalHeight = baseHeight;
+
+selectedItem.style.width = (naturalWidth * scale) + 'px';
+selectedItem.style.height = (naturalHeight * scale) + 'px';
+
+  keepItemInsideCanvas(selectedItem);
+updateToiletSymbol(selectedItem);
+updateChairSymbol(selectedItem);
+updateDoorSymbol(selectedItem);
+updateWindowSymbol(selectedItem);
+updateControls();
+updateBedRailPanel();
+}
+ function applyTransform(item) {
+  item.style.transform = 'none';
+}
+
+
+
+function getVisualSize(item) {
+  const type = item.dataset.type;
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+  const width = parseFloat(item.style.width) || item.offsetWidth;
+  const height = parseFloat(item.style.height) || item.offsetHeight;
+
+  // ドア・窓は外側を回してないので、そのままの大きさでOK
+  if (type === 'ドア' || type === '窓') {
+    return { width, height };
+  }
+
+  // 90度・270度のときは見た目の幅高さが入れ替わる
+  if (rotation === 90 || rotation === 270) {
+    return {
+      width: height,
+      height: width
+    };
+  }
+
+  return { width, height };
+}
+function getVisualOffset(item) {
+  const canvasRect = layoutCanvas.getBoundingClientRect();
+  const itemRect = item.getBoundingClientRect();
+
+  const styledLeft = parseFloat(item.style.left) || 0;
+  const styledTop = parseFloat(item.style.top) || 0;
+
+  return {
+    offsetLeft: (itemRect.left - canvasRect.left) - styledLeft,
+    offsetTop: (itemRect.top - canvasRect.top) - styledTop
+  };
+}
+function keepItemInsideCanvas(item) {
+  const visualSize = getVisualSize(item);
+  const { offsetLeft, offsetTop } = getVisualOffset(item);
+
+  let left = parseFloat(item.style.left) || 0;
+  let top = parseFloat(item.style.top) || 0;
+
+  const minLeft = -offsetLeft;
+  const minTop = -offsetTop;
+  const maxLeft = layoutCanvas.clientWidth - visualSize.width - offsetLeft;
+  const maxTop = layoutCanvas.clientHeight - visualSize.height - offsetTop;
+
+  left = Math.max(minLeft, Math.min(left, maxLeft));
+  top = Math.max(minTop, Math.min(top, maxTop));
+
+  item.style.left = left + 'px';
+  item.style.top = top + 'px';
+}
 
     function updateBedRailPanel() {
       if (selectedItem && selectedItem.dataset.type === 'ベッド') {
@@ -812,232 +1988,210 @@
       }
     }
 
-    function setBedRail(position) {
-      if (!selectedItem || selectedItem.dataset.type !== 'ベッド') return;
-      updateBedRailPosition(selectedItem, position);
-    }
+  function toggleBedRail(position) {
+  if (!selectedItem || selectedItem.dataset.type !== 'ベッド') return;
 
-    function updateBedRailPosition(bed, position) {
-      const rail = bed.querySelector('.bed-rail');
-      if (!rail) return;
+  const rail = getBedRail(selectedItem, position);
+  if (!rail) return;
 
-      rail.classList.remove('hidden');
-      rail.style.left = '';
-      rail.style.right = '';
-      rail.style.top = '';
-      rail.style.bottom = '';
-      rail.dataset.railPosition = position;
+  const willShow = rail.classList.contains('hidden');
 
-      if (position === 'none') {
-        rail.classList.add('hidden');
-        return;
-      }
+  if (willShow) {
+    rail.classList.remove('hidden');
 
-      if (position === 'left-top') {
-        rail.style.left = '6px';
-        rail.style.top = '6px';
-      }
-      if (position === 'right-top') {
-        rail.style.right = '6px';
-        rail.style.top = '6px';
-      }
-      if (position === 'left-bottom') {
-        rail.style.left = '6px';
-        rail.style.bottom = '6px';
-      }
-      if (position === 'right-bottom') {
-        rail.style.right = '6px';
-        rail.style.bottom = '6px';
-      }
-    }
+    // 👇ここ追加（毎回リセット）
+    rail.dataset.shape = 'straight';
 
-    function setHintText(text) {
-      layoutHint.innerHTML = text.replace(/\n/g, '<br>');
-    }
+  } else {
+    rail.classList.add('hidden');
+  }
 
-    function makeConfirmPreview() {
-      confirmInner.innerHTML = '';
+  updateBedRails(selectedItem);
+}
 
-      const items = layoutCanvas.querySelectorAll('.furniture');
-      items.forEach(item => {
-        const clone = item.cloneNode(true);
-        clone.classList.remove('selected');
-        clone.style.pointerEvents = 'none';
-        confirmInner.appendChild(clone);
-      });
-    }
+function setBedRailShape(position, shape) {
+  if (!selectedItem || selectedItem.dataset.type !== 'ベッド') return;
 
-    function saveAsImage() {
-      clearSelection();
+  const rail = getBedRail(selectedItem, position);
+  if (!rail) return;
 
-      const cloneWindow = window.open('', '_blank');
-      if (!cloneWindow) {
-        alert('ポップアップがブロックされているかも！');
-        return;
-      }
+  rail.classList.remove('hidden');
+  rail.dataset.shape = shape;
 
-      const previewHTML = confirmInner.outerHTML;
+  updateBedRails(selectedItem);
+}
 
-      cloneWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="ja">
-        <head>
-          <meta charset="UTF-8">
-          <title>設えメーカー 保存用</title>
-          <style>
-            body {
-              margin: 0;
-              padding: 40px;
-              background: #f7f2eb;
-              font-family: sans-serif;
-            }
-            .title {
-              text-align: center;
-              font-size: 28px;
-              margin-bottom: 20px;
-              color: #6f5a4e;
-            }
-            .confirm-inner {
-              width: 900px;
-              height: 600px;
-              margin: 0 auto;
-              position: relative;
-              background:
-                linear-gradient(rgba(170, 170, 170, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(170, 170, 170, 0.15) 1px, transparent 1px);
-              background-size: 28px 28px;
-              border: 2px solid rgba(120, 120, 120, 0.45);
-              overflow: hidden;
-            }
-            .furniture {
-              position: absolute;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              background: #f8f8f8;
-              border: 2px solid #b7b7b7;
-              color: #6f5a4e;
-              font-size: 18px;
-              text-align: center;
-              padding: 6px;
-              box-sizing: border-box;
-            }
-            .door {
-              background: #fafafa;
-              align-items: flex-end;
-              justify-content: flex-start;
-              padding-bottom: 8px;
-              padding-left: 8px;
-            }
-            .window {
-              background: #f0f7ff;
-              border-color: #94b5df;
-            }
-            .bed {
-              background: #fcfcfc;
-            }
-            .bed-rail {
-              position: absolute;
-              width: 16px;
-              height: 16px;
-              background: #b89f8d;
-              border-radius: 3px;
-            }
-            .bed-rail.hidden {
-              display: none;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="title">設えメーカー</div>
-          ${previewHTML}
-          <p style="text-align:center; margin-top:20px;">この画面を印刷 → PDF保存できるよ</p>
-        </body>
-        </html>
-      `);
-      cloneWindow.document.close();
+function getBedRail(bed, position) {
+  if (position === 'left-top') return bed.querySelector('.rail-lt');
+  if (position === 'right-top') return bed.querySelector('.rail-rt');
+  if (position === 'left-bottom') return bed.querySelector('.rail-lb');
+  if (position === 'right-bottom') return bed.querySelector('.rail-rb');
+  return null;
+}
+function setHintText(text) {
+}
+function clearAllFurniture() {
+  document.querySelectorAll('#layoutCanvas .furniture').forEach(el => el.remove());
+  clearSelection();
+  furnitureCount = 0;
+  setHintText('全部けしたよ！');
+}
 
-      setTimeout(() => {
-        cloneWindow.print();
-      }, 500);
-    }
+function saveCurrentLayout() {
+  clearSelection();
+  makeConfirmPreview();
 
-    layoutCanvas.addEventListener('click', () => {
-      clearSelection();
-    });
+  setTimeout(() => {
+    saveAsImage();
+  }, 50);
+}
+function updateToiletInnerRotation(item) {
+  if (!item || item.dataset.type !== 'トイレ') return;
 
+  const inner = item.querySelector('.toilet-inner');
+  if (!inner) return;
+
+  const rotation = parseInt(item.dataset.rotation || '0', 10);
+  inner.style.transform = `rotate(${rotation}deg)`;
+}
+
+function makeConfirmPreview() {
+  confirmInner.innerHTML = '';
+
+  const canvasClone = layoutCanvas.cloneNode(true);
+
+  canvasClone.style.position = 'absolute';
+  canvasClone.style.left = '0';
+  canvasClone.style.top = '0';
+  canvasClone.style.pointerEvents = 'none';
+
+  // ← 一旦 scaleなし！
+  canvasClone.style.transform = 'none';
+
+  confirmInner.appendChild(canvasClone);
+}
+
+async function saveAsImage() {
+  clearSelection();
+
+  const target = document.getElementById('confirmInner');
+  if (!target) return;
+
+  const canvas = await html2canvas(target, {
+    backgroundColor: "#ffffff",
+    scale: 1
+  });
+
+  // 保存用は小さめにする
+  const smallCanvas = document.createElement('canvas');
+  const maxWidth = 420;   // ← 家系図アプリっぽい小さめ感
+  const scale = maxWidth / canvas.width;
+
+  smallCanvas.width = Math.round(canvas.width * scale);
+  smallCanvas.height = Math.round(canvas.height * scale);
+
+  const ctx = smallCanvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, smallCanvas.width, smallCanvas.height);
+  ctx.drawImage(canvas, 0, 0, smallCanvas.width, smallCanvas.height);
+
+  const link = document.createElement('a');
+  link.download = 'layout.png';
+  link.href = smallCanvas.toDataURL('image/png');
+  link.click();
+
+  setHintText('画像を保存したよ！');
+}
     function startDragMouse(e) {
-      if (e.target.closest('.bed-rail')) return;
-      e.preventDefault();
-      e.stopPropagation();
+  if (e.target.closest('.bed-rail')) return;
+  e.preventDefault();
+  e.stopPropagation();
 
-      const item = e.currentTarget;
-      selectItem(item);
+  const item = e.currentTarget;
+  selectItem(item);
 
-      const rect = layoutCanvas.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
+  const rect = layoutCanvas.getBoundingClientRect();
+  const itemRect = item.getBoundingClientRect();
 
-      const offsetX = e.clientX - itemRect.left;
-      const offsetY = e.clientY - itemRect.top;
+  const offsetX = e.clientX - itemRect.left;
+  const offsetY = e.clientY - itemRect.top;
 
-      function moveAt(clientX, clientY) {
-        let left = clientX - rect.left - offsetX;
-        let top = clientY - rect.top - offsetY;
+  function moveAt(clientX, clientY) {
+    let visualLeft = clientX - rect.left - offsetX;
+    let visualTop = clientY - rect.top - offsetY;
 
-        const maxLeft = layoutCanvas.clientWidth - item.offsetWidth;
-        const maxTop = layoutCanvas.clientHeight - item.offsetHeight;
+    const visualSize = getVisualSize(item);
+    const { offsetLeft, offsetTop } = getVisualOffset(item);
 
-        left = Math.max(0, Math.min(left, maxLeft));
-        top = Math.max(0, Math.min(top, maxTop));
+    const minLeft = -offsetLeft;
+    const minTop = -offsetTop;
+    const maxLeft = layoutCanvas.clientWidth - visualSize.width - offsetLeft;
+    const maxTop = layoutCanvas.clientHeight - visualSize.height - offsetTop;
 
-        item.style.left = left + 'px';
-        item.style.top = top + 'px';
-        updateControls();
-      }
+    let left = visualLeft - offsetLeft;
+    let top = visualTop - offsetTop;
 
-      function onMouseMove(ev) {
-        moveAt(ev.clientX, ev.clientY);
-      }
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+    top = Math.max(minTop, Math.min(top, maxTop));
 
-      function onMouseUp() {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-      }
+    item.style.left = left + 'px';
+    item.style.top = top + 'px';
+    updateControls();
+  }
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
-    }
+  function onMouseMove(ev) {
+    moveAt(ev.clientX, ev.clientY);
+  }
 
+  function onMouseUp() {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
     function startDragTouch(e) {
-      if (e.target.closest('.bed-rail')) return;
-      e.preventDefault();
-      e.stopPropagation();
+  if (e.target.closest('.bed-rail')) return;
+  e.preventDefault();
+  e.stopPropagation();
 
-      const item = e.currentTarget;
-      selectItem(item);
+  const item = e.currentTarget;
+  selectItem(item);
 
-      const touch = e.touches[0];
-      const rect = layoutCanvas.getBoundingClientRect();
-      const itemRect = item.getBoundingClientRect();
+  const touch = e.touches[0];
+  const rect = layoutCanvas.getBoundingClientRect();
+  const itemRect = item.getBoundingClientRect();
 
-      const offsetX = touch.clientX - itemRect.left;
-      const offsetY = touch.clientY - itemRect.top;
+  const offsetX = touch.clientX - itemRect.left;
+  const offsetY = touch.clientY - itemRect.top;
 
-      function onTouchMove(ev) {
-        const t = ev.touches[0];
-        let left = t.clientX - rect.left - offsetX;
-        let top = t.clientY - rect.top - offsetY;
+  function onTouchMove(ev) {
+    const t = ev.touches[0];
 
-        const maxLeft = layoutCanvas.clientWidth - item.offsetWidth;
-        const maxTop = layoutCanvas.clientHeight - item.offsetHeight;
+    let visualLeft = t.clientX - rect.left - offsetX;
+    let visualTop = t.clientY - rect.top - offsetY;
 
-        left = Math.max(0, Math.min(left, maxLeft));
-        top = Math.max(0, Math.min(top, maxTop));
+    const visualSize = getVisualSize(item);
+    const { offsetLeft, offsetTop } = getVisualOffset(item);
 
-        item.style.left = left + 'px';
-        item.style.top = top + 'px';
-        updateControls();
-      }
+    const minLeft = -offsetLeft;
+    const minTop = -offsetTop;
+    const maxLeft = layoutCanvas.clientWidth - visualSize.width - offsetLeft;
+    const maxTop = layoutCanvas.clientHeight - visualSize.height - offsetTop;
+
+    let left = visualLeft - offsetLeft;
+    let top = visualTop - offsetTop;
+
+    left = Math.max(minLeft, Math.min(left, maxLeft));
+    top = Math.max(minTop, Math.min(top, maxTop));
+
+    item.style.left = left + 'px';
+    item.style.top = top + 'px';
+    updateControls();
+  }
+
+
 
       function onTouchEnd() {
         document.removeEventListener('touchmove', onTouchMove);
@@ -1048,5 +2202,6 @@
       document.addEventListener('touchend', onTouchEnd);
     }
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>
