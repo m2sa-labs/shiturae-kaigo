@@ -396,7 +396,7 @@
 .toilet-label {
   position: absolute;
   left: 50%;
-  top: calc(100% + 2px);   /* ← 箱の外に出す */
+  top: calc(100% + 2px);
   transform: translateX(-50%);
   font-size: 16px;
   font-weight: bold;
@@ -1139,7 +1139,7 @@ function updateToiletSymbol(item) {
   const rotation = parseInt(item.dataset.rotation || '0', 10);
 
   label.style.left = '50%';
-  label.style.top = 'calc(100% + 2px)';
+  label.style.top = 'calc(100% - 4px)';
   label.style.right = '';
   label.style.bottom = '';
 
@@ -1691,6 +1691,8 @@ function placeRightTopRail270(rail, lshape = false) {
         case 'トイレ':
   return { width: 96, height: 106, label: 'トイレ', className: 'toilet' };
   　　　　　　return { width: 110, height: 86, label: '窓', className: 'window' };
+  　　　　case '窓':
+  return { width: 110, height: 86, label: '窓', className: 'window' };
         case 'ベッド':
           return { width: 120, height: 180, label: 'ベッド', className: 'bed' };
         default:
